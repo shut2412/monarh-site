@@ -5,8 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Архитектурное бюро МонАрх | Иркутск</title>
     <meta name="description" content="Архитектурное бюро «МонАрх» в Иркутске. Более 25 лет проектирования общественных, жилых и частных зданий в Восточной Сибири.">
+    <meta name="keywords" content="архитектурное бюро Иркутск, проектирование зданий Иркутск, архитектор Иркутск, МонАрх">
     <link rel="icon" href="img/logo.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Schema.org для локального бизнеса -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ArchitecturalService",
+      "name": "Архитектурное бюро МонАрх",
+      "url": "https://shut2412.github.io/monarh-site/",
+      "logo": "https://shut2412.github.io/monarh-site/img/logo.jpg",
+      "image": "https://shut2412.github.io/monarh-site/img/history-1.jpg",
+      "description": "Архитектурное бюро в Иркутске. Более 25 лет проектирования общественных, жилых и частных зданий в Восточной Сибири.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ул. Красноярская, строение 31/1, офис 401",
+        "addressLocality": "Иркутск",
+        "addressRegion": "Иркутская область",
+        "postalCode": "664009",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 52.279125,
+        "longitude": 104.330685
+      },
+      "telephone": "+7-3952-258-300",
+      "email": "monarh-irk@mail.ru",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "priceRange": "₽₽₽",
+      "foundingDate": "1998",
+      "areaServed": {
+        "@type": "City",
+        "name": "Иркутск"
+      }
+    }
+    </script>
+
     <style>
         /* --- СБРОС И БАЗОВЫЕ СТИЛИ --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,7 +117,7 @@
         /* --- ГЛАВНЫЙ ЭКРАН (HERO) --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/glavnaya.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/history-1.jpg') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -148,7 +190,6 @@
         }
         .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        /* Картинки для услуг */
         .service-icon {
             width: 80px;
             height: 80px;
@@ -171,17 +212,23 @@
         .service-card p { font-size: 0.95rem; color: #666; }
 
         /* --- ПОРТФОЛИО --- */
-        .portfolio-filters { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .portfolio-filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
         .filter-btn {
             background: none; border: 2px solid var(--primary); padding: 8px 20px;
             cursor: pointer; border-radius: 30px; font-weight: 600; transition: all 0.3s;
-            font-family: inherit;
+            font-family: inherit; font-size: 14px;
         }
         .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; }
         
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
         .portfolio-item {
             position: relative; overflow: hidden; border-radius: 10px; cursor: pointer; height: 300px;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .portfolio-item.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
         }
         
         /* ЧЁРНО-БЕЛЫЕ КАРТИНКИ С ЭФФЕКТОМ ПРИ НАВЕДЕНИИ */
@@ -206,6 +253,23 @@
         .portfolio-item:hover .portfolio-overlay { transform: translateY(0); }
         .portfolio-overlay h4 { font-size: 1.2rem; margin-bottom: 5px; }
         .portfolio-overlay span { font-size: 0.9rem; color: #ccc; }
+
+        /* БЕЙДЖ "ТОП" */
+        .portfolio-item[data-category*="top"]::before {
+            content: '★ ТОП';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(192, 57, 43, 0.4);
+        }
 
         /* --- ЭТАПЫ РАБОТЫ --- */
         .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; counter-reset: step; }
@@ -272,7 +336,6 @@
         .contact-item .icon { font-size: 1.5rem; color: var(--accent); }
         .contact-item p { font-size: 1.1rem; }
         
-        /* Кликабельные телефоны */
         .contact-item p a {
             color: #fff;
             transition: color 0.3s;
@@ -363,6 +426,9 @@
             .modal-thumbnails img { width: 80px; height: 60px; }
             
             .scroll-top { width: 45px; height: 45px; bottom: 20px; right: 20px; font-size: 20px; }
+            
+            .portfolio-filters { gap: 8px; }
+            .filter-btn { padding: 6px 14px; font-size: 12px; }
         }
     </style>
 </head>
@@ -482,16 +548,20 @@
         <h2 class="section-title reveal">Наши проекты</h2>
         
         <div class="portfolio-filters reveal">
-            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn active" data-filter="top">ТОП проекты</button>
+            <button class="filter-btn" data-filter="all">Все</button>
             <button class="filter-btn" data-filter="public">Общественные</button>
             <button class="filter-btn" data-filter="residential">Жилые</button>
             <button class="filter-btn" data-filter="private">Частные дома</button>
+            <button class="filter-btn" data-filter="complex">Комплексное освоение</button>
         </div>
 
         <div class="portfolio-grid">
-            <!-- ПРОЕКТ 1: Гостиница History -->
+            <!-- ============ ТОП + ОБЩЕСТВЕННЫЕ ============ -->
+
+            <!-- Гостиница History: ТОП + Общественное -->
             <div class="portfolio-item reveal" 
-                 data-category="public"
+                 data-category="top public"
                  data-title="Гостиница 5* History"
                  data-desc="Современный отель в центре Иркутска. Сочетание классических элементов и современных материалов. Включает ресторан, SPA-зону и панорамный вид."
                  data-images="img/history-1.jpg, img/history-2.jpg">
@@ -502,9 +572,9 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 2: Административно-офисное здание -->
+            <!-- Административно-офисное здание: ТОП + Общественное -->
             <div class="portfolio-item reveal" 
-                 data-category="public"
+                 data-category="top public"
                  data-title="Административно-офисное здание, пер. Пионерский"
                  data-desc="Современное офисное здание с уникальной архитектурой фасада и панорамным остеклением."
                  data-images="img/pionerskiy-1.jpg, img/pionerskiy-2.jpg, img/pionerskiy-3.jpg, img/pionerskiy-4.jpg">
@@ -515,9 +585,9 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 3: Гостиница "Маяк" -->
+            <!-- Гостиница "Маяк": ТОП + Общественное -->
             <div class="portfolio-item reveal" 
-                 data-category="public"
+                 data-category="top public"
                  data-title="Гостиница 'Маяк', пос. Листвянка"
                  data-desc="Гостиничный комплекс на берегу Байкала. Яркий архитектурный облик, панорамные виды."
                  data-images="img/mayak-1.jpg, img/mayak-2.jpg, img/mayak-3.jpg">
@@ -528,7 +598,77 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 4: Административно-спортивный центр -->
+            <!-- ГТК Вера: ТОП + Общественное -->
+            <div class="portfolio-item reveal" 
+                 data-category="top public"
+                 data-title="Гостинично-туристический комплекс 'Вера'"
+                 data-desc="Комплекс в пос. Листвянка. Гармоничное сочетание с природным ландшафтом."
+                 data-images="img/vera-1.jpg, img/vera-2.jpg">
+                <img src="img/vera-1.jpg" alt="Комплекс Вера" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ГТК "Вера"</h4>
+                    <span>пос. Листвянка</span>
+                </div>
+            </div>
+
+            <!-- ============ ТОП + ЖИЛЫЕ ============ -->
+
+            <!-- Жилой дом с офисными помещениями: ТОП + Жилое -->
+            <div class="portfolio-item reveal" 
+                 data-category="top residential"
+                 data-title="Жилой дом с офисными помещениями"
+                 data-desc="Жилой дом с коммерческими помещениями на первых этажах."
+                 data-images="img/jil-dom-of-1.jpg, img/jil-dom-of-2.jpg">
+                <img src="img/jil-dom-of-1.jpg" alt="Жилой дом с офисами" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Жилой дом с офисными помещениями</h4>
+                    <span>Жилое здание</span>
+                </div>
+            </div>
+
+            <!-- ЖК Танар Радужный: ТОП + Жилое + Комплексное -->
+            <div class="portfolio-item reveal" 
+                 data-category="top residential complex"
+                 data-title="Жилой комплекс 'Танар', мкрн. Радужный"
+                 data-desc="Жилой комплекс в микрорайоне Радужный."
+                 data-images="img/tanar-raduj-1.jpg">
+                <img src="img/tanar-raduj-1.jpg" alt="ЖК Танар Радужный" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ЖК "Танар"</h4>
+                    <span>мкрн. Радужный</span>
+                </div>
+            </div>
+
+            <!-- ============ ТОП + ЧАСТНЫЕ ============ -->
+
+            <!-- Индивидуальный дом, Байкальский тракт: ТОП + Частный -->
+            <div class="portfolio-item reveal" 
+                 data-category="top private"
+                 data-title="Индивидуальный жилой дом, Байкальский тракт, КП 'Грин Лэнд'"
+                 data-desc="Дом на Байкальском тракте."
+                 data-images="img/ind-jil-dom-bay-1.jpg">
+                <img src="img/ind-jil-dom-bay-1.jpg" alt="Дом Байкальский тракт" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Индивидуальный жилой дом</h4>
+                    <span>Байкальский тракт</span>
+                </div>
+            </div>
+
+            <!-- Индивидуальный дом, Иркутский район: ТОП + Частный -->
+            <div class="portfolio-item reveal" 
+                 data-category="top private"
+                 data-title="Индивидуальный жилой дом, Байкальский тракт, Иркутский район"
+                 data-desc="Дом в Иркутском районе."
+                 data-images="img/ind-jil-dom-bay-irk-1.jpg">
+                <img src="img/ind-jil-dom-bay-irk-1.jpg" alt="Дом Иркутский район" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Индивидуальный жилой дом</h4>
+                    <span>Иркутский район</span>
+                </div>
+            </div>
+
+            <!-- ============ ОБЩЕСТВЕННЫЕ (не ТОП) ============ -->
+
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Административно-спортивный центр"
@@ -541,7 +681,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 5: Спортивно-развлекательный центр "Акула" -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Спортивно-развлекательный центр 'Акула'"
@@ -554,7 +693,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 6: Административно-гостиничное здание на ул. Горная -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Административно-гостиничное здание на ул. Горная"
@@ -567,7 +705,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 7: Шато Зегаани -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Шато Зегаани"
@@ -580,20 +717,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 8: Гостинично-туристический комплекс "Вера" -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Гостинично-туристический комплекс 'Вера'"
-                 data-desc="Комплекс в пос. Листвянка. Гармоничное сочетание с природным ландшафтом."
-                 data-images="img/vera-1.jpg, img/vera-2.jpg">
-                <img src="img/vera-1.jpg" alt="Комплекс Вера" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ГТК "Вера"</h4>
-                    <span>пос. Листвянка</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 9: МФК, ул. Красных Мадьярд -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="МФК, ул. Красных Мадьярд"
@@ -606,7 +729,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 10: Гостиница, ул. Советская -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Гостиница, ул. Советская"
@@ -618,8 +740,7 @@
                     <span>ул. Советская</span>
                 </div>
             </div>
-            
-            <!-- ПРОЕКТ 11: Административное здание, ул. Загоскина -->
+
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Административное здание, ул. Загоскина"
@@ -632,7 +753,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 12: Президент-отель 5* "Ретро" -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Президент-отель 5* 'Ретро'"
@@ -645,33 +765,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 13: Спортивно-оздоровительный комплекс, г. Байкальск -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Спортивно-оздоровительный комплекс, г. Байкальск"
-                 data-desc="Комплекс для занятий спортом и отдыха. Современные решения."
-                 data-images="img/sport-ozd-1.jpg, img/sport-ozd-2.jpg, img/sport-ozd-3.jpg, img/sport-ozd-4.jpg, img/sport-ozd-5.jpg">
-                <img src="img/sport-ozd-1.jpg" alt="СОК Байкальск" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Спортивно-оздоровительный комплекс</h4>
-                    <span>г. Байкальск</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 14: Гостинично-туристический комплекс, пос. Листвянка -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Гостинично-туристический комплекс, пос. Листвянка"
-                 data-desc="Туристический комплекс на берегу Байкала."
-                 data-images="img/gost-tur-1.jpg">
-                <img src="img/gost-tur-1.jpg" alt="ГТК Листвянка" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Гостинично-туристический комплекс</h4>
-                    <span>пос. Листвянка</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 15: Здание Сбербанка -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Здание Сбербанка"
@@ -684,7 +777,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 16: Сервисный центр Mercedes-Benz -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Сервисный центр Mercedes-Benz"
@@ -697,20 +789,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 17: Велолыжероллерная трасса -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Велолыжероллерная трасса"
-                 data-desc="Спортивный объект для велосипедного и лыжероллерного спорта."
-                 data-images="img/lij-rol-1.jpg">
-                <img src="img/lij-rol-1.jpg" alt="Велолыжероллерная трасса" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Велолыжероллерная трасса</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 18: Школа дзюдо -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Школа дзюдо"
@@ -723,46 +801,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 19: Гостиничный комплекс, г. Байкальск -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Гостиничный комплекс, г. Байкальск"
-                 data-desc="Современный гостиничный комплекс."
-                 data-images="img/gost-komp-1.jpg">
-                <img src="img/gost-komp-1.jpg" alt="Гостиничный комплекс Байкальск" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Гостиничный комплекс</h4>
-                    <span>г. Байкальск</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 20: Транспортно-пересадочный узел пристани "Ракета" -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Транспортно-пересадочный узел пристани 'Ракета'"
-                 data-desc="ТПУ с пристанью для скоростных судов."
-                 data-images="img/reketa-1.jpg">
-                <img src="img/reketa-1.jpg" alt="Пристань Ракета" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ТПУ пристани "Ракета"</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 21: Гостиница "Тройка" -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Гостиница 'Тройка'"
-                 data-desc="Гостиница с классическим дизайном."
-                 data-images="img/troyka-1.jpg">
-                <img src="img/troyka-1.jpg" alt="Гостиница Тройка" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Гостиница "Тройка"</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 23: Гостиница -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Гостиница"
@@ -775,7 +813,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 24: Гостиница, ул. Дзержинского -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Гостиница, ул. Дзержинского"
@@ -788,7 +825,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 25: Учебный корпус БГУЭП -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Учебный корпус БГУЭП, ул. Горького"
@@ -801,7 +837,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 26: Детский сад, мкрн. Солнечный -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Детский сад, мкрн. Солнечный"
@@ -814,7 +849,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 27: Детский сад, п. Молодежный -->
             <div class="portfolio-item reveal" 
                  data-category="public"
                  data-title="Детский сад, п. Молодежный"
@@ -827,74 +861,8 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 28: Производственный комплекс -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Производственный комплекс по переработке"
-                 data-desc="Промышленный объект."
-                 data-images="img/proizvod-1.jpg">
-                <img src="img/proizvod-1.jpg" alt="Производственный комплекс" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Производственный комплекс</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
+            <!-- ============ ЖИЛЫЕ (не ТОП) ============ -->
 
-            <!-- ПРОЕКТ 29: БайкалМанСервис -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="БайкалМанСервис"
-                 data-desc="Сервисный центр."
-                 data-images="img/baykman-1.jpg, img/baykman-2.jpg">
-                <img src="img/baykman-1.jpg" alt="БайкалМанСервис" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>БайкалМанСервис</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 30: Информационный центр "Лесная биржа" -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Информационный центр 'Лесная биржа'"
-                 data-desc="Информационный центр."
-                 data-images="img/Les-bir-1.jpg, img/Les-bir-2.jpg">
-                <img src="img/Les-bir-1.jpg" alt="Лесная биржа" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Информационный центр "Лесная биржа"</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 31: Центр города Горно-Алтайска -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Центр города Горно-Алтайска"
-                 data-desc="Проект реконструкции центра города."
-                 data-images="img/centr-gor-alt-1.jpg, img/centr-gor-alt-2.jpg">
-                <img src="img/centr-gor-alt-1.jpg" alt="Центр Горно-Алтайска" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Центр города Горно-Алтайска</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 32: Культурноделовой центр "Галактика" -->
-            <div class="portfolio-item reveal" 
-                 data-category="public"
-                 data-title="Культурноделовой центр 'Галактика'"
-                 data-desc="Культурный и деловой центр."
-                 data-images="img/galakt-1.jpg">
-                <img src="img/galakt-1.jpg" alt="Галактика" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Культурноделовой центр "Галактика"</h4>
-                    <span>Общественное здание</span>
-                </div>
-            </div>
-
-            <!-- ================= ЖИЛЫЕ ================= -->
-
-            <!-- ПРОЕКТ 33: ЖК Дольче Вита -->
             <div class="portfolio-item reveal" 
                  data-category="residential"
                  data-title="ЖК Дольче Вита"
@@ -907,46 +875,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 34: Жилой дом с офисными помещениями -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Жилой дом с офисными помещениями"
-                 data-desc="Жилой дом с коммерческими помещениями на первых этажах."
-                 data-images="img/jil-dom-of-1.jpg, img/jil-dom-of-2.jpg">
-                <img src="img/jil-dom-of-1.jpg" alt="Жилой дом с офисами" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Жилой дом с офисными помещениями</h4>
-                    <span>Жилое здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 35: ЖК Наследие -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Жилой комплекс 'Наследие'"
-                 data-desc="Жилой комплекс с архитектурой, отсылающей к классике."
-                 data-images="img/nasled-1.jpg, img/nasled-2.jpg">
-                <img src="img/nasled-1.jpg" alt="ЖК Наследие" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ЖК "Наследие"</h4>
-                    <span>Жилое здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 36: Малоэтажные жилые дома -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Малоэтажные жилые дома квартирного типа"
-                 data-desc="Комплекс малоэтажных жилых домов."
-                 data-images="img/malo-jil-1.jpg">
-                <img src="img/malo-jil-1.jpg" alt="Малоэтажные дома" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Малоэтажные жилые дома</h4>
-                    <span>Жилое здание</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 37: Группа жилых домов -->
             <div class="portfolio-item reveal" 
                  data-category="residential"
                  data-title="Группа жилых домов"
@@ -959,46 +887,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 38: ЖК Танар, п. Маркова -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Жилой комплекс 'Танар', п. Маркова"
-                 data-desc="Жилой комплекс в поселке Маркова."
-                 data-images="img/tanar-markova-1.jpg, img/tanar-markova-2.jpg">
-                <img src="img/tanar-markova-1.jpg" alt="ЖК Танар Маркова" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ЖК "Танар"</h4>
-                    <span>п. Маркова</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 39: ЖК Танар, мкрн. Радужный -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Жилой комплекс 'Танар', мкрн. Радужный"
-                 data-desc="Жилой комплекс в микрорайоне Радужный."
-                 data-images="img/tanar-raduj-1.jpg">
-                <img src="img/tanar-raduj-1.jpg" alt="ЖК Танар Радужный" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ЖК "Танар"</h4>
-                    <span>мкрн. Радужный</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 40: ЖК Танар, ул. Сеченова -->
-            <div class="portfolio-item reveal" 
-                 data-category="residential"
-                 data-title="Жилой комплекс 'Танар', ул. Сеченова"
-                 data-desc="Жилой комплекс на ул. Сеченова."
-                 data-images="img/tanar-sechenova-1.jpg, img/tanar-sechenova-2.jpg">
-                <img src="img/tanar-sechenova-1.jpg" alt="ЖК Танар Сеченова" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>ЖК "Танар"</h4>
-                    <span>ул. Сеченова</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 41: ЖК, мкрн. Солнечный -->
             <div class="portfolio-item reveal" 
                  data-category="residential"
                  data-title="Жилой комплекс, мкрн. Солнечный"
@@ -1011,9 +899,8 @@
                 </div>
             </div>
 
-            <!-- ================= ИНДИВИДУАЛЬНЫЕ ДОМА ================= -->
+            <!-- ============ ЧАСТНЫЕ (не ТОП) ============ -->
 
-            <!-- ПРОЕКТ 42: Индивидуальный жилой дом, КП "Грин Лэнд" -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="Индивидуальный жилой дом, КП 'Грин Лэнд'"
@@ -1026,7 +913,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 43: Индивидуальный жилой дом, КП "Идиллия Эстейд" -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="Индивидуальный жилой дом, КП 'Идиллия Эстейд'"
@@ -1039,20 +925,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 44: Индивидуальный жилой дом, Байкальский тракт, КП "Грин Лэнд" -->
-            <div class="portfolio-item reveal" 
-                 data-category="private"
-                 data-title="Индивидуальный жилой дом, Байкальский тракт, КП 'Грин Лэнд'"
-                 data-desc="Дом на Байкальском тракте."
-                 data-images="img/ind-jil-dom-bay-1.jpg">
-                <img src="img/ind-jil-dom-bay-1.jpg" alt="Дом Байкальский тракт" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Индивидуальный жилой дом</h4>
-                    <span>Байкальский тракт</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 45: Индивидуальный жилой дом -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="Индивидуальный жилой дом"
@@ -1065,7 +937,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 46: Индивидуальный жилой дом, КП "Грин Лэнд" -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="Индивидуальный жилой дом, КП 'Грин Лэнд'"
@@ -1078,7 +949,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 47: Индивидуальный жилой дом, п. Листвянка -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="Индивидуальный жилой дом, п. Листвянка"
@@ -1091,33 +961,6 @@
                 </div>
             </div>
 
-            <!-- ПРОЕКТ 48: Индивидуальный жилой дом, Байкальский тракт, КП "Грин Лэнд" -->
-            <div class="portfolio-item reveal" 
-                 data-category="private"
-                 data-title="Индивидуальный жилой дом, Байкальский тракт, КП 'Грин Лэнд'"
-                 data-desc="Дом на Байкальском тракте в КП Грин Лэнд."
-                 data-images="img/ind-jil-dom-bay-gl-1.jpg">
-                <img src="img/ind-jil-dom-bay-gl-1.jpg" alt="Дом Байкальский Грин Лэнд" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Индивидуальный жилой дом</h4>
-                    <span>Байкальский тракт</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 49: Индивидуальный жилой дом, Байкальский тракт, Иркутский район -->
-            <div class="portfolio-item reveal" 
-                 data-category="private"
-                 data-title="Индивидуальный жилой дом, Байкальский тракт, Иркутский район"
-                 data-desc="Дом в Иркутском районе."
-                 data-images="img/ind-jil-dom-bay-irk-1.jpg">
-                <img src="img/ind-jil-dom-bay-irk-1.jpg" alt="Дом Иркутский район" loading="lazy">
-                <div class="portfolio-overlay">
-                    <h4>Индивидуальный жилой дом</h4>
-                    <span>Иркутский район</span>
-                </div>
-            </div>
-
-            <!-- ПРОЕКТ 50: "Русская деревня", д. Карлук -->
             <div class="portfolio-item reveal" 
                  data-category="private"
                  data-title="'Русская деревня', д. Карлук"
@@ -1127,6 +970,190 @@
                 <div class="portfolio-overlay">
                     <h4>"Русская деревня"</h4>
                     <span>д. Карлук</span>
+                </div>
+            </div>
+
+            <!-- ============ КОМПЛЕКСНОЕ ОСВОЕНИЕ ============ -->
+
+            <!-- Спортивно-оздоровительный комплекс, г. Байкальск -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Спортивно-оздоровительный комплекс, г. Байкальск"
+                 data-desc="Комплекс для занятий спортом и отдыха. Современные решения."
+                 data-images="img/sport-ozd-1.jpg, img/sport-ozd-2.jpg, img/sport-ozd-3.jpg, img/sport-ozd-4.jpg, img/sport-ozd-5.jpg">
+                <img src="img/sport-ozd-1.jpg" alt="СОК Байкальск" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Спортивно-оздоровительный комплекс</h4>
+                    <span>г. Байкальск</span>
+                </div>
+            </div>
+
+            <!-- Гостинично-туристический комплекс, пос. Листвянка -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Гостинично-туристический комплекс, пос. Листвянка"
+                 data-desc="Туристический комплекс на берегу Байкала."
+                 data-images="img/gost-tur-1.jpg">
+                <img src="img/gost-tur-1.jpg" alt="ГТК Листвянка" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Гостинично-туристический комплекс</h4>
+                    <span>пос. Листвянка</span>
+                </div>
+            </div>
+
+            <!-- Велолыжероллерная трасса -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Велолыжероллерная трасса"
+                 data-desc="Спортивный объект для велосипедного и лыжероллерного спорта."
+                 data-images="img/lij-rol-1.jpg">
+                <img src="img/lij-rol-1.jpg" alt="Велолыжероллерная трасса" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Велолыжероллерная трасса</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- Гостиничный комплекс, г. Байкальск -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Гостиничный комплекс, г. Байкальск"
+                 data-desc="Современный гостиничный комплекс."
+                 data-images="img/gost-komp-1.jpg">
+                <img src="img/gost-komp-1.jpg" alt="Гостиничный комплекс Байкальск" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Гостиничный комплекс</h4>
+                    <span>г. Байкальск</span>
+                </div>
+            </div>
+
+            <!-- ТПУ пристани "Ракета" -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Транспортно-пересадочный узел пристани 'Ракета'"
+                 data-desc="ТПУ с пристанью для скоростных судов."
+                 data-images="img/reketa-1.jpg">
+                <img src="img/reketa-1.jpg" alt="Пристань Ракета" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ТПУ пристани "Ракета"</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- Производственный комплекс -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Производственный комплекс по переработке"
+                 data-desc="Промышленный объект."
+                 data-images="img/proizvod-1.jpg">
+                <img src="img/proizvod-1.jpg" alt="Производственный комплекс" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Производственный комплекс</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- БайкалМанСервис -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="БайкалМанСервис"
+                 data-desc="Сервисный центр."
+                 data-images="img/baykman-1.jpg, img/baykman-2.jpg">
+                <img src="img/baykman-1.jpg" alt="БайкалМанСервис" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>БайкалМанСервис</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- Информационный центр "Лесная биржа" -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Информационный центр 'Лесная биржа'"
+                 data-desc="Информационный центр."
+                 data-images="img/Les-bir-1.jpg, img/Les-bir-2.jpg">
+                <img src="img/Les-bir-1.jpg" alt="Лесная биржа" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Информационный центр "Лесная биржа"</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- Центр города Горно-Алтайска -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Центр города Горно-Алтайска"
+                 data-desc="Проект реконструкции центра города."
+                 data-images="img/centr-gor-alt-1.jpg, img/centr-gor-alt-2.jpg">
+                <img src="img/centr-gor-alt-1.jpg" alt="Центр Горно-Алтайска" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Центр города Горно-Алтайска</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- Культурноделовой центр "Галактика" -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex"
+                 data-title="Культурноделовой центр 'Галактика'"
+                 data-desc="Культурный и деловой центр."
+                 data-images="img/galakt-1.jpg">
+                <img src="img/galakt-1.jpg" alt="Галактика" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Культурноделовой центр "Галактика"</h4>
+                    <span>Общественное здание</span>
+                </div>
+            </div>
+
+            <!-- ЖК Наследие -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex residential"
+                 data-title="Жилой комплекс 'Наследие'"
+                 data-desc="Жилой комплекс с архитектурой, отсылающей к классике."
+                 data-images="img/nasled-1.jpg, img/nasled-2.jpg">
+                <img src="img/nasled-1.jpg" alt="ЖК Наследие" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ЖК "Наследие"</h4>
+                    <span>Жилое здание</span>
+                </div>
+            </div>
+
+            <!-- Малоэтажные жилые дома -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex residential"
+                 data-title="Малоэтажные жилые дома квартирного типа"
+                 data-desc="Комплекс малоэтажных жилых домов."
+                 data-images="img/malo-jil-1.jpg">
+                <img src="img/malo-jil-1.jpg" alt="Малоэтажные дома" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>Малоэтажные жилые дома</h4>
+                    <span>Жилое здание</span>
+                </div>
+            </div>
+
+            <!-- ЖК Танар, п. Маркова -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex residential"
+                 data-title="Жилой комплекс 'Танар', п. Маркова"
+                 data-desc="Жилой комплекс в поселке Маркова."
+                 data-images="img/tanar-markova-1.jpg, img/tanar-markova-2.jpg">
+                <img src="img/tanar-markova-1.jpg" alt="ЖК Танар Маркова" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ЖК "Танар"</h4>
+                    <span>п. Маркова</span>
+                </div>
+            </div>
+
+            <!-- ЖК Танар, ул. Сеченова -->
+            <div class="portfolio-item reveal" 
+                 data-category="complex residential"
+                 data-title="Жилой комплекс 'Танар', ул. Сеченова"
+                 data-desc="Жилой комплекс на ул. Сеченова."
+                 data-images="img/tanar-sechenova-1.jpg, img/tanar-sechenova-2.jpg">
+                <img src="img/tanar-sechenova-1.jpg" alt="ЖК Танар Сеченова" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h4>ЖК "Танар"</h4>
+                    <span>ул. Сеченова</span>
                 </div>
             </div>
 
@@ -1219,7 +1246,7 @@
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
 
-        // 2. Фильтрация портфолио
+        // 2. Фильтрация портфолио с анимацией
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
 
@@ -1230,15 +1257,38 @@
                 const filterValue = btn.getAttribute('data-filter');
 
                 portfolioItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    const categories = item.getAttribute('data-category').split(' ');
+                    const matches = (filterValue === 'all') || categories.includes(filterValue);
+                    
+                    if (matches) {
+                        item.classList.remove('hidden');
                         item.style.display = 'block';
-                        setTimeout(() => item.style.opacity = '1', 50);
+                        // Плавное появление
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
                     } else {
+                        item.classList.add('hidden');
                         item.style.opacity = '0';
-                        setTimeout(() => item.style.display = 'none', 300);
+                        item.style.transform = 'scale(0.95)';
+                        // Скрываем через 400мс, когда закончится анимация
+                        setTimeout(() => {
+                            if (item.classList.contains('hidden')) {
+                                item.style.display = 'none';
+                            }
+                        }, 400);
                     }
                 });
             });
+        });
+
+        // Применяем фильтр "ТОП" при загрузке страницы
+        window.addEventListener('load', () => {
+            const activeBtn = document.querySelector('.filter-btn.active');
+            if (activeBtn) {
+                activeBtn.click();
+            }
         });
 
         // 3. Модальное окно (Галерея)
@@ -1289,7 +1339,7 @@
             }
         });
 
-        // 4. ФОРМА: ВАЛИДАЦИЯ + ОТПРАВКА ЧЕРЕЗ WEB3FORMS
+        // 4. ФОРМА
         const form = document.getElementById('contactForm');
         const phoneInput = document.getElementById('phone');
         const formStatus = document.getElementById('formStatus');
@@ -1379,7 +1429,7 @@
             }
         });
 
-        // 5. СЧЁТЧИКИ С АНИМАЦИЕЙ
+        // 5. СЧЁТЧИКИ
         const counters = document.querySelectorAll('.counter');
         let countersStarted = false;
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Архитектурное бюро МонАрх | Иркутск</title>
+    <meta name="description" content="Архитектурное бюро «МонАрх» в Иркутске. Более 25 лет проектирования общественных, жилых и частных зданий в Восточной Сибири.">
     <link rel="icon" href="img/logo.jpg" type="image/jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -146,7 +147,26 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .service-icon { font-size: 3rem; margin-bottom: 20px; color: var(--accent); }
+        
+        /* Картинки для услуг */
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .service-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover .service-icon img {
+            transform: scale(1.1);
+        }
+        
         .service-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
         .service-card p { font-size: 0.95rem; color: #666; }
 
@@ -203,7 +223,7 @@
         .step-item h4 { margin-top: 15px; margin-bottom: 10px; color: var(--primary); }
         .step-item p { font-size: 0.9rem; color: #666; }
 
-        /* --- МОДАЛЬНОЕ ОКНО (УВЕЛИЧЕНО) --- */
+        /* --- МОДАЛЬНОЕ ОКНО --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); 
@@ -223,7 +243,6 @@
         .close-modal:hover { color: #000; }
         .modal-body { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; }
         
-        /* В модальном окне картинки ВСЕГДА цветные и БОЛЬШИЕ */
         .modal-gallery img { 
             width: 100%; 
             border-radius: 5px; 
@@ -253,6 +272,17 @@
         .contact-item .icon { font-size: 1.5rem; color: var(--accent); }
         .contact-item p { font-size: 1.1rem; }
         
+        /* Кликабельные телефоны */
+        .contact-item p a {
+            color: #fff;
+            transition: color 0.3s;
+            border-bottom: 1px dashed rgba(255,255,255,0.4);
+        }
+        .contact-item p a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
         .contact-form input, .contact-form textarea {
             width: 100%; padding: 15px; margin-bottom: 15px; border: none; border-radius: 5px;
             font-family: inherit; font-size: 1rem;
@@ -280,13 +310,45 @@
         footer a { color: #fff; margin: 0 10px; transition: color 0.3s; }
         footer a:hover { color: var(--accent); }
 
+        /* --- КНОПКА "НАВЕРХ" --- */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(192, 57, 43, 0.4);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            background: var(--accent-hover);
+            transform: translateY(-5px);
+        }
+
         /* --- АДАПТИВ --- */
         @media (max-width: 992px) {
             .about-grid, .contact-grid, .modal-body { grid-template-columns: 1fr; }
             .hero-content h1 { font-size: 2.5rem; }
             nav ul { display: none; } 
             
-            /* Шапка на мобильных */
             header { padding: 8px 4%; }
             .logo { gap: 8px; }
             .logo img { height: 35px; }
@@ -296,10 +358,11 @@
                 font-size: 11px;
             }
             
-            /* Модалка на мобильных */
             .modal-content { padding: 15px; margin: 2% auto; }
             .modal-gallery img { height: 250px; }
             .modal-thumbnails img { width: 80px; height: 60px; }
+            
+            .scroll-top { width: 45px; height: 45px; bottom: 20px; right: 20px; font-size: 20px; }
         }
     </style>
 </head>
@@ -341,11 +404,11 @@
                 <p>Мы выполняем сотни проектных работ: от концептуальных разработок и эскизных проектов до рабочих документаций, проходящих государственную экспертизу.</p>
                 <div class="stats">
                     <div class="stat-item">
-                        <h4>25+</h4>
+                        <h4><span class="counter" data-target="25">0</span>+</h4>
                         <p>Лет опыта</p>
                     </div>
                     <div class="stat-item">
-                        <h4>100+</h4>
+                        <h4><span class="counter" data-target="100">0</span>+</h4>
                         <p>Проектов</p>
                     </div>
                 </div>
@@ -361,22 +424,30 @@
         <h2 class="section-title reveal">Наши услуги</h2>
         <div class="services-grid">
             <div class="service-card reveal">
-                <div class="service-icon">📐</div>
+                <div class="service-icon">
+                    <img src="img/arch.PNG" alt="Архитектурное проектирование" loading="lazy">
+                </div>
                 <h3>Архитектурное проектирование</h3>
                 <p>Разработка концепций, эскизных проектов и рабочей документации для зданий любой сложности.</p>
             </div>
             <div class="service-card reveal">
-                <div class="service-icon">🏗️</div>
+                <div class="service-icon">
+                    <img src="img/grad.png" alt="Градостроительство" loading="lazy">
+                </div>
                 <h3>Градостроительство</h3>
                 <p>Проекты планировки территорий, генеральные планы, схемы застройки.</p>
             </div>
             <div class="service-card reveal">
-                <div class="service-icon">🛋️</div>
+                <div class="service-icon">
+                    <img src="img/diz.png" alt="Дизайн интерьеров" loading="lazy">
+                </div>
                 <h3>Дизайн интерьеров</h3>
                 <p>Создание функциональных и эстетичных интерьеров для коммерческих и жилых помещений.</p>
             </div>
             <div class="service-card reveal">
-                <div class="service-icon">✅</div>
+                <div class="service-icon">
+                    <img src="img/ecs.png" alt="Прохождение экспертизы" loading="lazy">
+                </div>
                 <h3>Прохождение экспертизы</h3>
                 <p>Полное сопровождение проектов для получения разрешительной документации.</p>
             </div>
@@ -690,8 +761,6 @@
                     <span>Общественное здание</span>
                 </div>
             </div>
-
-            <!-- ПРОЕКТ 22 (Гостиница Сибирь) — УДАЛЁН -->
 
             <!-- ПРОЕКТ 23: Гостиница -->
             <div class="portfolio-item reveal" 
@@ -1094,11 +1163,14 @@
                 </div>
                 <div class="contact-item">
                     <div class="icon">📞</div>
-                    <p>+7 (3952) 258-300<br>+7 (902) 512-12-04</p>
+                    <p>
+                        <a href="tel:+73952258300">+7 (3952) 258-300</a><br>
+                        <a href="tel:+79025121204">+7 (902) 512-12-04</a>
+                    </p>
                 </div>
                 <div class="contact-item">
                     <div class="icon">✉️</div>
-                    <p>monarh-irk@mail.ru</p>
+                    <p><a href="mailto:monarh-irk@mail.ru">monarh-irk@mail.ru</a></p>
                 </div>
                 <div class="contact-item">
                     <div class="icon">🕒</div>
@@ -1126,6 +1198,9 @@
         <p>&copy; 2024 Архитектурное бюро «МонАрх». Все права защищены.</p>
         <p><a href="mailto:monarh-irk@mail.ru">Email</a></p>
     </footer>
+
+    <!-- КНОПКА "НАВЕРХ" -->
+    <button class="scroll-top" id="scrollTop" title="Наверх">↑</button>
 
     <!-- СКРИПТЫ -->
     <script>
@@ -1220,18 +1295,15 @@
         const formStatus = document.getElementById('formStatus');
         const submitBtn = document.getElementById('submitBtn');
 
-        // Маска для телефона
         phoneInput.addEventListener('input', (e) => {
             let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
             e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
         });
 
-        // Валидация email
         const isValidEmail = (email) => {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         };
 
-        // Валидация телефона (11 цифр)
         const isValidPhone = (phone) => {
             const digits = phone.replace(/\D/g, '');
             return digits.length === 11 && (digits[0] === '7' || digits[0] === '8');
@@ -1305,6 +1377,62 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Отправить заявку';
             }
+        });
+
+        // 5. СЧЁТЧИКИ С АНИМАЦИЕЙ
+        const counters = document.querySelectorAll('.counter');
+        let countersStarted = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                updateCounter();
+            });
+        };
+
+        const checkCounters = () => {
+            if (countersStarted) return;
+            const firstCounter = counters[0];
+            if (!firstCounter) return;
+            const rect = firstCounter.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) {
+                countersStarted = true;
+                animateCounters();
+            }
+        };
+
+        window.addEventListener('scroll', checkCounters);
+        checkCounters();
+
+        // 6. КНОПКА "НАВЕРХ"
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>

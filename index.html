@@ -287,7 +287,7 @@
         .step-item h4 { margin-top: 15px; margin-bottom: 10px; color: var(--primary); }
         .step-item p { font-size: 0.9rem; color: #666; }
 
-        /* --- МОДАЛЬНОЕ ОКНО (БОЛЬШЕ, БЕЗ ОБРЕЗКИ) --- */
+        /* --- МОДАЛЬНОЕ ОКНО --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); 
@@ -310,8 +310,15 @@
 
         .modal-body { display: grid; grid-template-columns: 3fr 1fr; gap: 30px; }
 
-        /* Главная картинка — вписывается полностью, без обрезки */
+        /* Карусель — теперь главная картинка сверху, миниатюры снизу */
         .modal-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Обёртка главной картинки */
+        .modal-main-image-wrap {
             background: #f4f4f4;
             border-radius: 8px;
             padding: 10px;
@@ -332,13 +339,28 @@
             filter: grayscale(0%) !important;
         }
 
+        /* Карусель миниатюр — ПОД картинкой */
         .modal-thumbnails { 
             display: flex; 
             gap: 10px; 
             overflow-x: auto; 
-            margin-top: 15px;
-            padding-bottom: 5px;
+            padding: 10px 5px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            scrollbar-width: thin;
         }
+
+        .modal-thumbnails::-webkit-scrollbar {
+            height: 8px;
+        }
+        .modal-thumbnails::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        .modal-thumbnails::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
         .modal-thumbnails img { 
             width: 100px;
             height: 75px;
@@ -351,7 +373,8 @@
             flex-shrink: 0;
             filter: grayscale(0%) !important;
         }
-        .modal-thumbnails img:hover, .modal-thumbnails img.active { 
+        .modal-thumbnails img:hover, 
+        .modal-thumbnails img.active { 
             opacity: 1; 
             border: 2px solid var(--accent); 
         }
@@ -377,6 +400,31 @@
         .contact-item p a:hover {
             color: var(--accent);
             border-bottom-color: var(--accent);
+        }
+
+        /* Кнопка Instagram */
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            margin-top: 10px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(220, 39, 67, 0.3);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 39, 67, 0.5);
+        }
+        .social-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
         }
         
         .contact-form input, .contact-form textarea {
@@ -455,7 +503,7 @@
             }
             
             .modal-content { padding: 15px; margin: 2% auto; width: 98%; }
-            .modal-gallery { min-height: 250px; padding: 5px; }
+            .modal-main-image-wrap { min-height: 250px; padding: 5px; }
             #modalMainImage { max-height: 50vh; }
             .modal-thumbnails img { width: 70px; height: 55px; }
             
@@ -1200,7 +1248,11 @@
             <span class="close-modal">&times;</span>
             <div class="modal-body">
                 <div class="modal-gallery">
-                    <img id="modalMainImage" src="" alt="Project Image">
+                    <!-- Обёртка для главной картинки -->
+                    <div class="modal-main-image-wrap">
+                        <img id="modalMainImage" src="" alt="Project Image">
+                    </div>
+                    <!-- Карусель миниатюр — ПОД картинкой -->
                     <div class="modal-thumbnails" id="modalThumbnails"></div>
                 </div>
                 <div class="modal-info">
@@ -1237,6 +1289,15 @@
                     <div class="icon">🕒</div>
                     <p>Пн-Пт: 09:00 - 18:00<br>Сб-Вс: Выходной</p>
                 </div>
+                
+                <!-- Кнопка Instagram — вставьте ваш ник -->
+                <a href="https://www.instagram.com/monarh.bureau" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                    Мы в Instagram
+                </a>
+                
                 <div class="map-container">
                     <iframe src="https://yandex.ru/map-widget/v1/?ll=104.330685%2C52.279125&z=18.9&pt=104.330685,52.279125,pm2rdm" width="100%" height="100%" frameborder="0"></iframe>
                 </div>
